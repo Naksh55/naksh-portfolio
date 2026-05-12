@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Naksh Bali — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a26;
+    --accent: #7c6cff;
+    --accent2: #a78bfa;
+    --accent3: #38bdf8;
+    --text: #f0eeff;
+    --muted: #8880aa;
+    --border: rgba(124, 108, 255, 0.18);
+    --card: rgba(26, 26, 38, 0.8);
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Animated grid bg ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,108,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,108,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Glowing orbs ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.25;
+    animation: float 8s ease-in-out infinite alternate;
+  }
+  .orb1 { width: 500px; height: 500px; background: #7c6cff; top: -120px; left: -100px; }
+  .orb2 { width: 380px; height: 380px; background: #38bdf8; bottom: 0; right: -80px; animation-delay: -4s; }
+  @keyframes float { from { transform: translateY(0); } to { transform: translateY(40px); } }
+
+  /* ── Layout ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    backdrop-filter: blur(16px);
+    background: rgba(10,10,15,0.75);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); font-size: 14px; text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 80px;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(124,108,255,0.12);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--accent2);
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 8px #4ade80;
+    flex-shrink: 0;
+  }
+  .hero-name {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(52px, 9vw, 88px);
+    line-height: 1.0;
+    letter-spacing: -3px;
+    color: var(--text);
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-name .accent { color: var(--accent); }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    margin-top: 20px;
+    max-width: 520px;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-sub strong { color: var(--accent2); font-weight: 500; }
+  .hero-cta {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    margin-top: 36px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 15px; font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #6a5cf5; transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 28px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px; font-weight: 500;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 40px; flex-wrap: wrap;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 32px; font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Sections ── */
+  section { padding: 100px 0; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .section-tag::before {
+    content: ''; display: block;
+    width: 24px; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .section-title {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(32px, 5vw, 48px);
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 520px;
+    margin-bottom: 56px;
+  }
+
+  /* ── Skills ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .skill-icon {
+    font-size: 26px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .skill-name {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag {
+    font-size: 11px; font-weight: 500;
+    background: rgba(124,108,255,0.12);
+    border: 1px solid rgba(124,108,255,0.2);
+    color: var(--accent2);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ── Projects ── */
+  .projects-grid { display: grid; gap: 24px; }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .project-card:hover { border-color: rgba(124,108,255,0.4); transform: translateY(-4px); }
+  .project-card:hover::before { opacity: 1; }
+  .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+  .project-emoji { font-size: 32px; }
+  .project-badge {
+    font-size: 11px; font-weight: 500;
+    background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.25);
+    color: var(--accent3);
+    padding: 4px 12px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .project-title {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+    margin: 12px 0 8px;
+  }
+  .project-desc { color: var(--muted); font-size: 15px; line-height: 1.6; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .stack-tag {
+    font-size: 12px;
+    background: rgba(15,15,24,0.8);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* ── Achievements ── */
+  .achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .achievement-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex; gap: 16px; align-items: flex-start;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.2s;
+  }
+  .achievement-card:hover { border-color: var(--accent); }
+  .ach-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(124,108,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .ach-title { font-weight: 500; font-size: 15px; color: var(--text); }
+  .ach-desc { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* ── Contact ── */
+  .contact-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 56px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-box::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(124,108,255,0.3), transparent, rgba(56,189,248,0.2));
+    z-index: -1;
+  }
+  .contact-title {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .contact-sub { color: var(--muted); font-size: 16px; margin-bottom: 36px; }
+  .contact-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px;
+    background: rgba(124,108,255,0.1);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .contact-link:hover { background: rgba(124,108,255,0.22); transform: translateY(-2px); }
+  .contact-info {
+    margin-top: 36px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+  }
+  .contact-item { font-size: 14px; color: var(--muted); }
+  .contact-item span { display: block; color: var(--text); font-weight: 500; margin-top: 2px; }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+    position: relative; z-index: 1;
+  }
+
+  /* ── Scroll reveal ── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">NB<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="container">
+  <section class="hero">
+    <div>
+      <div class="hero-tag">Available for internships &amp; roles</div>
+      <h1 class="hero-name">Naksh<br><span class="accent">Bali.</span></h1>
+      <p class="hero-sub">
+        CSE student at <strong>CGC Landran</strong> passionate about
+        <strong>AI/ML</strong>, full-stack development, and building things that matter.
+        CGPA 8.77 · Class of 2027.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">View Projects →</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">8.77<span>/10</span></div>
+          <div class="stat-label">Current CGPA</div>
+        </div>
+        <div>
+          <div class="stat-num">3<span>+</span></div>
+          <div class="stat-label">Major Projects</div>
+        </div>
+        <div>
+          <div class="stat-num">2nd<span></span></div>
+          <div class="stat-label">HackHeist Coding Contest</div>
+        </div>
+        <div>
+          <div class="stat-num">1<span> Patent</span></div>
+          <div class="stat-label">Filed via CGC CBS</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="reveal">
+      <div class="section-tag">What I Work With</div>
+      <h2 class="section-title">Skills &amp; Technologies</h2>
+      <p class="section-desc">A toolkit built through coursework, projects, and competitive programming.</p>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <span class="skill-icon">🤖</span>
+        <div class="skill-name">AI / ML</div>
+        <div class="ach-desc">Building intelligent systems end-to-end</div>
+        <div class="skill-tags">
+          <span class="tag">LangChain</span>
+          <span class="tag">LangGraph</span>
+          <span class="tag">Groq</span>
+          <span class="tag">scikit-learn</span>
+          <span class="tag">Streamlit</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">💻</span>
+        <div class="skill-name">Languages</div>
+        <div class="ach-desc">Core programming languages I use daily</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Java</span>
+          <span class="tag">C++</span>
+          <span class="tag">SQL</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">📱</span>
+        <div class="skill-name">Mobile Dev</div>
+        <div class="ach-desc">Android app development</div>
+        <div class="skill-tags">
+          <span class="tag">Android Studio</span>
+          <span class="tag">Java</span>
+          <span class="tag">Firebase</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">🌐</span>
+        <div class="skill-name">Web</div>
+        <div class="ach-desc">Frontend and backend development</div>
+        <div class="skill-tags">
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">🗄️</span>
+        <div class="skill-name">Data &amp; Backend</div>
+        <div class="ach-desc">Data pipelines and APIs</div>
+        <div class="skill-tags">
+          <span class="tag">MySQL</span>
+          <span class="tag">SQLite</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">Pandas</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">⚙️</span>
+        <div class="skill-name">Tools &amp; Platforms</div>
+        <div class="ach-desc">Dev workflow and infra</div>
+        <div class="skill-tags">
+          <span class="tag">Git</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">LangSmith</span>
+          <span class="tag">VS Code</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <div class="section-tag">What I've Built</div>
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-desc">Real-world projects spanning AI, mobile, and machine learning.</p>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-emoji">🏥</div>
+          <span class="project-badge">Multi-Agent AI · 2026</span>
+        </div>
+        <div class="project-title">DocMate — AI Health Assistant</div>
+        <p class="project-desc">
+          A multi-agent health assistant built with LangGraph featuring six specialized AI nodes: Supervisor, Symptom Extractor, Normalizer, Disease Predictor, Risk Assessor, and Medical Advisor. Includes a Report Analyzer for PDFs/images, conditional emergency routing, and intent classification across five categories. Integrated LangSmith tracing for observability.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">LangGraph</span>
+          <span class="stack-tag">LangChain</span>
+          <span class="stack-tag">Groq LLaMA 3.3-70B</span>
+          <span class="stack-tag">Streamlit</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">LangSmith</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-emoji">🏠</div>
+          <span class="project-badge">Android App · 2025</span>
+        </div>
+        <div class="project-title">rentH — Property Rental Platform</div>
+        <p class="project-desc">
+          An Android application streamlining the rental property search and listing process. Features property browsing, owner-tenant communication, and Firebase-backed real-time data sync. Designed for ease of use with a clean Material Design UI.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">Android Studio</span>
+          <span class="stack-tag">Java</span>
+          <span class="stack-tag">Firebase</span>
+          <span class="stack-tag">XML</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-emoji">🧠</div>
+          <span class="project-badge">AI Agent · Individual · 2 Months</span>
+        </div>
+        <div class="project-title">Autonomous Cognitive Agent for Deep Research</div>
+        <p class="project-desc">
+          A planner-executor AI agent that decomposes high-level goals into structured TODOs, delegates research tasks to specialized sub-agents, and synthesizes findings into coherent outputs. Designed for deep, multi-step research workflows — the agent autonomously plans, reasons, and adapts its execution path based on intermediate results.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">LangChain</span>
+          <span class="stack-tag">DeepAgents</span>
+          <span class="stack-tag">AI Systems</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-emoji">📊</div>
+          <span class="project-badge">Machine Learning · 2025</span>
+        </div>
+        <div class="project-title">Student Dropout Prediction Model</div>
+        <p class="project-desc">
+          A machine learning model that predicts student dropout risk using academic performance, attendance, and socio-economic indicators. Trained and evaluated multiple classifiers to identify at-risk students early, enabling targeted interventions by institutions.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">scikit-learn</span>
+          <span class="stack-tag">Pandas</span>
+          <span class="stack-tag">Matplotlib</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="reveal">
+      <div class="section-tag">Recognition</div>
+      <h2 class="section-title">Achievements</h2>
+      <p class="section-desc">Highlights from academics, competitions, and extracurriculars.</p>
+    </div>
+    <div class="achievements-grid reveal">
+      <div class="achievement-card">
+        <div class="ach-icon">🥈</div>
+        <div>
+          <div class="ach-title">HackHeist — Runner Up</div>
+          <div class="ach-desc">2nd place in competitive coding contest among CSE students</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">📜</div>
+        <div>
+          <div class="ach-title">Patent Filed</div>
+          <div class="ach-desc">Emotion-Adaptive Lighting System for Mental Health Support — filed via CGC CBS</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">🎓</div>
+        <div>
+          <div class="ach-title">CGPA 8.77</div>
+          <div class="ach-desc">Consistent academic performance at CGC Landran, Class of 2027</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">🏆</div>
+        <div>
+          <div class="ach-title">DSA Competitive Programming</div>
+          <div class="ach-desc">Active problem solver with achievements in data structures & algorithms</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">🤝</div>
+        <div>
+          <div class="ach-title">Extracurricular Leadership</div>
+          <div class="ach-desc">Active participant in college technical events and team activities</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">🔬</div>
+        <div>
+          <div class="ach-title">AI Research Project</div>
+          <div class="ach-desc">DocMate evaluated by faculty supervisor Ms. Aditi Sharma</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-box reveal">
+      <div class="contact-title">Let's Build Something</div>
+      <p class="contact-sub">Open to internships, collaborations, and interesting projects.</p>
+      <div class="contact-links">
+        <a href="https://github.com/Naksh55" class="contact-link">⬡ GitHub</a>
+        <a href="https://www.linkedin.com/in/nakshbali45/" class="contact-link">in LinkedIn</a>
+        <a href="mailto:nakshbalinb45@gmail.com" class="contact-link">✉ Email Me</a>
+      </div>
+      <div class="contact-info">
+        <div class="contact-item">Institution<span>CGC Landran, Mohali</span></div>
+        <div class="contact-item">Program<span>B.Tech CSE · 2023–2027</span></div>
+        <div class="contact-item">Location<span>Punjab, India</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Built by Naksh Bali · 2026</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
